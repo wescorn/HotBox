@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HOTBOXWebsite", "HOTBOXWebsite\HOTBOXWebsite.csproj", "{CE974870-BF12-4FB0-93F2-CB24969BF4B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{E1179ECD-F19F-48FE-B475-EB218B8E53B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{4FFE1FEB-065A-4DA7-AE4F-3776529D4B53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{7A61B253-6E7E-468F-BE8C-BBAAB3A492DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE974870-BF12-4FB0-93F2-CB24969BF4B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE974870-BF12-4FB0-93F2-CB24969BF4B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE974870-BF12-4FB0-93F2-CB24969BF4B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE974870-BF12-4FB0-93F2-CB24969BF4B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1179ECD-F19F-48FE-B475-EB218B8E53B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1179ECD-F19F-48FE-B475-EB218B8E53B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1179ECD-F19F-48FE-B475-EB218B8E53B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1179ECD-F19F-48FE-B475-EB218B8E53B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FFE1FEB-065A-4DA7-AE4F-3776529D4B53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FFE1FEB-065A-4DA7-AE4F-3776529D4B53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FFE1FEB-065A-4DA7-AE4F-3776529D4B53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FFE1FEB-065A-4DA7-AE4F-3776529D4B53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A61B253-6E7E-468F-BE8C-BBAAB3A492DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A61B253-6E7E-468F-BE8C-BBAAB3A492DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A61B253-6E7E-468F-BE8C-BBAAB3A492DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A61B253-6E7E-468F-BE8C-BBAAB3A492DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

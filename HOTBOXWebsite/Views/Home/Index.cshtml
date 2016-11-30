@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Domain.DomainModels.StoredProject>
+
+@{
+    ViewBag.Title = "Main";
+}
+
+
+
+<h2>Main</h2>
+
+
+<div style="border: 2px solid black">
+    <select name="Select Existing Project" id="ProDropdown" onchange="OnProjectChange(this)">
+        <option value="Select">Select</option>
+        @foreach (var project in Model)
+            {
+            <option value="@project">@project.ProjectName</option>
+        }
+    </select>
+    <table style="width:100%">
+        @using (Html.BeginForm("CreateProject", "BoxData", FormMethod.Post))
+            {
+            <tr><td width="40%"><B>Set-Værdier</B></td></tr>
+                <tr><td>Projektnavn: </td><td><input id="ProNavn" type="text" name="projektnavn"></td></tr>
+                <tr><td>Starttidspunkt: </td><td><input id="StartSP" placeholder="YYYY/MM/DD" type="text" name="startDag">dage</td> <td><input type="text" name="startTime" placeholder="HH">t</td> <td><input type="text" name="startMinut" placeholder="MM">m</td> <td><input type="text" name="startSekund" placeholder="SS">s</td></tr>
+                <tr><td>Setpunkt for temperaturen i box 1: </td><td><input id="BOX1TempSP" type="text" name="setpunktBox1" style="background-color: #008215"></td></tr>
+                <tr><td>Setpunkt for temperaturen i guarded zone omkring box 1: </td><td><input id="BOX1GuardedSP" type="text" name="setpunktGuardedBox1" style="background-color: #008215"></td></tr>
+                <tr><td>Setpunkt for temperaturen i box 2: </td><td><input id="BOX2TempSP" type="text" name="setpunktBox2" style="background-color: #008215"></td></tr>
+                <tr><td>Logningsinterval </td><td><input id="LogIntSP" type="text" name="logningsinterval" style="background-color: #008215"></td></tr>
+                <tr><td colspan="5" align="right"> <input id="Opretbtn" type="submit" value="Opret projekt"> </td></tr>
+        }
+
+    </table>
+</div>
+<div style="border: 2px solid black">
+    <table style="width:100%">
+            <tr><td width="40%"><B>Løbende data</B></td></tr>
+            <tr><td>Tid fra start: </td><td><input id="LDTidFraStart" type="text" name="TidfraStartDag">dage</td> <td><input type="text" name="TidfraStartTime">t</td> <td><input type="text" name="TidfraStartMinut">m</td> <td><input type="text" name="TidfraStartSekund">s</td></tr>
+            <tr><td>Aktuel temperatur i box 1: </td><td><input id="LDTempBox1" type="text" name="AktuelTempBox1"></td></tr>
+            <tr><td>Aktuel temperatur i guarded zone omkring box 1: </td><td><input id="LDTempGuardBox1" type="text" name="AktuelTempGuardedBox1"></td></tr>
+            <tr><td>Aktuel temperatur i box 2: </td><td><input id="LDTempBox2" type="text" name="AktuelTempBox2"></td></tr>
+            <tr><td>Temperaturforskel mellem box 1 og box 2: </td><td><input id="LDTempMellemBox1Box2" type="text" name="TempForskel"></td></tr>
+            <tr><td>Effektforbrug(målerstand): </td><td><input id="LDEffektForbrug" type="text" name="Effektforbrug"></td></tr>
+    </table>
+</div>
+<div style="border: 2px solid black">
+    <table style="width:100%">
+
+            <tr><td width="40%"><B>Beregninger</B></td></tr>
+            <tr><td>Areal af testemne: </td><td><input id="BAreal" type="text" name="Areal" style="background-color: #008215" onchange="OnArealChange(this);"></td></tr>
+            <tr><td>Beregnings starttidspunkt: </td><td><input id="BStartTid" type="text" name="TidfraStartDag" style="background-color: #008215">d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
+            <tr><td>Beregnings sluttidspunkt: </td><td><input id="BSlutTid" type="text" name="TidfraStartDag" style="background-color: #008215">d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
+            <tr><td>Testtid: </td><td><input id="BTestTid" type="text" name="TidfraStartDag" style="background-color: #008215">d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
+            <tr><td>Gennemsnitlig temperaturforskel mellem box 1 og box 2: </td><td><input id="BGenSnitTempBox1Box2" type="text" name="SnitTempForskel"></td></tr>
+            <tr><td>Effektforbrug (målerstand) ved starttidspunkt: </td><td><input id="BEffektStart" type="text" name="EffektforbrugStart"></td></tr>
+            <tr><td>Effektforbrug (målerstand) ved sluttidspunkt: </td><td><input id="BEffektSlut" type="text" name="EffektforbrugSlut"></td></tr>
+            <tr><td>Effektforbrug i beregningsperioden: </td><td><input id="BEffektBPerioden" type="text" name="EffektforbrugBeregnPeriode"></td></tr>
+            <tr><td>Testemnets transmissionskoefficient: </td><td><input id="BTransKoeff" type="text" name="transmissionsKoeff"></td></tr>
+
+    </table>
+</div>
+
+
+<script>
+        function OnArealChange(input) {
+            document.getElementById("BStartTid").value = input.value;
+        }
+        function OnProjectChange(input) {
+            if (input.value != "Select") {
+                document.getElementById("Opretbtn").disabled = true;
+                document.getElementById("ProNavn").value = input.value;
+            } else {
+                document.getElementById("Opretbtn").disabled = false;
+                document.getElementById("ProNavn").value = "";
+            }
+        }
+        function OnArealChange(input) {
+            document.getElementById("BStartTid").value = input.value;
+        }
+        function OnArealChange(input) {
+            document.getElementById("BStartTid").value = input.value;
+        }
+        function OnArealChange(input) {
+            document.getElementById("BStartTid").value = input.value;
+        }
+        function OnArealChange(input) {
+            document.getElementById("BStartTid").value = input.value;
+        }
+        function getSelectedIntex() {
+            return
+        }
+</script>

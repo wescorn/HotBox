@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ProjectDetails>
+  <Project Name="Project1">
+    <StartTime>2017/12/20 08:00:00</StartTime>
+    <EndTime>2017/12/21 12:00:00</EndTime>
+</Project>
+  <Project Name="Project2">
+    <StartTime>2017/02/02 12:00:00</StartTime>
+    <EndTime>2017/02/03 12:00:00</EndTime>
+</Project>
+</ProjectDetails>
