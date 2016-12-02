@@ -1,11 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ProjectDetails>
+  <Project Name="Project3">
+    <StartTime>11-11-2015 12:25:30</StartTime>
+    <EndTime>12-11-2015 12:25:31</EndTime>
+  </Project>
   <Project Name="Project1">
-    <StartTime>2017/12/20 08:00:00</StartTime>
-    <EndTime>2017/12/21 12:00:00</EndTime>
-</Project>
-  <Project Name="Project2">
-    <StartTime>2017/02/02 12:00:00</StartTime>
-    <EndTime>2017/02/03 12:00:00</EndTime>
-</Project>
+    <StartTime>21-12-2016 11:00:11</StartTime>
+    <EndTime>12-11-2015 12:25:30</EndTime>
+  </Project>
+  <Project Name="project2">
+    <StartTime>11-11-2015 12:25:30</StartTime>
+    <EndTime>12-11-2015 12:25:30</EndTime>
+  </Project>
 </ProjectDetails>

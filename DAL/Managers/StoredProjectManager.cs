@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.DomainModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,12 +16,15 @@ namespace DAL.Managers
 
         public XmlDocument GetAll()
         {
-
             XmlDocument xdoc = new XmlDocument();
             FileStream rfile = new FileStream(filepath, FileMode.Open);
             xdoc.Load(rfile);
             rfile.Close();
             return xdoc;
+        }
+
+        public void CreateProject() {
+
         }
 
     }
