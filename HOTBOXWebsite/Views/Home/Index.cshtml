@@ -1,28 +1,39 @@
-﻿@model IEnumerable<HOTBOXWebsite.Models.DropdownModel>
+﻿@model   HOTBOXWebsite.Models.ProjectOverviewViewModel
 
 @{
     ViewBag.Title = "Main";
 }
 
 
-
 <h2>Main</h2>
 
 
+
 <div style="border: 2px solid black">
-    <select id="ProDropdown" onchange="OnProjectChange(this)">
+   @using (Html.BeginForm("Index", "Home", FormMethod.Get)) {
+        <select name="id" onchange="this.form.submit()">
         <option value="Select">Select</option>
-        @foreach (var item in Model)
+        @foreach (var item in Model.projects)
+        {
+            if (Model.SelectedProject != null && Model.SelectedProject.Id == item.Id)
             {
-            <option value="@item.Id">@item.project.ProjectName</option>
+                <option value="@item.Id" selected="selected">@item.project.ProjectName</option>
+            }
+            else
+            {
+                <option value="@item.Id">@item.project.ProjectName</option>
+            }
+
         }
     </select>
+   }
+
     <table style="width:100%">
         @using (Html.BeginForm("CreateProject", "Home", FormMethod.Post))
             {
             <tr><td width="40%"><B>Set-Værdier</B></td></tr>
-                <tr><td>Projektnavn: </td><td><input id="ProNavn" type="text" name="projektnavn"></td></tr>
-                <tr><td>Starttidspunkt: </td><td><input id="StartSP" placeholder="YYYY/MM/DD" type="text" name="startDag">dage</td> <td><input type="text" name="startTime" placeholder="HH">t</td> <td><input type="text" name="startMinut" placeholder="MM">m</td> <td><input type="text" name="startSekund" placeholder="SS">s</td></tr>
+            <tr><td>Projektnavn: </td><td><input id="ProNavn" type="text" name="projektnavn"></td></tr>
+                <tr><td>Starttidspunkt: </td><td><input id="StartSP" placeholder="DD-MM-YYYY" type="text" name="startDag">dage</td> <td><input type="text" name="startTime" placeholder="HH">t</td> <td><input type="text" name="startMinut" placeholder="MM">m</td> <td><input type="text" name="startSekund" placeholder="SS">s</td></tr>
                 <tr><td>Sluttidspunkt: </td><td><input id="SlutSP" placeholder="DD-MM-YYYY" type="text" name="slutDag">dage</td> <td><input type="text" name="slutTime" placeholder="HH">t</td> <td><input type="text" name="slutMinut" placeholder="MM">m</td> <td><input type="text" name="slutSekund" placeholder="SS">s</td></tr>
                 <tr><td colspan="5" align="right"> <input id="Opretbtn" type="submit" value="Opret projekt"> </td></tr>
         }
@@ -32,44 +43,34 @@
 <div style="border: 2px solid black">
     <table style="width:100%">
 
-            <tr><td width="40%"><B>Beregninger</B></td></tr>
-            <tr><td>Areal af testemne: </td><td><input id="BAreal" type="text" name="Areal" style="background-color: #008215" onchange="OnArealChange(this);"></td></tr>
-            <tr><td>Beregnings starttidspunkt: </td><td><input id="BStartTid" type="text" name="TidfraStartDag" style="background-color: #008215">d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
-            <tr><td>Beregnings sluttidspunkt: </td><td><input id="BSlutTid" type="text" name="TidfraStartDag" style="background-color: #008215">d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
-            <tr><td>Testtid: </td><td><input id="BTestTid" type="text" name="TidfraStartDag" style="background-color: #008215">d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
-            <tr><td>Gennemsnitlig temperaturforskel mellem box 1 og box 2: </td><td><input id="BGenSnitTempBox1Box2" type="text" name="SnitTempForskel"></td></tr>
-            <tr><td>Effektforbrug (målerstand) ved starttidspunkt: </td><td><input id="BEffektStart" type="text" name="EffektforbrugStart"></td></tr>
-            <tr><td>Effektforbrug (målerstand) ved sluttidspunkt: </td><td><input id="BEffektSlut" type="text" name="EffektforbrugSlut"></td></tr>
-            <tr><td>Effektforbrug i beregningsperioden: </td><td><input id="BEffektBPerioden" type="text" name="EffektforbrugBeregnPeriode"></td></tr>
-            <tr><td>Testemnets transmissionskoefficient: </td><td><input id="BTransKoeff" type="text" name="transmissionsKoeff"></td></tr>
+        <tr><td width="40%"><B>Beregninger</B></td></tr>
+        <tr><td>Areal af testemne: </td><td><input id="BAreal" type="text" name="Areal" style="background-color: #008215" onchange="OnArealChange(this);"></td></tr>
+        <tr><td>Beregnings starttidspunkt: </td><td>@Html.EditorFor(model => model.SelectedProject.project.StartTime) d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
+        <tr><td>Beregnings sluttidspunkt: </td><td>@Html.EditorFor(model => model.SelectedProject.project.EndTime)d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
+        <tr><td>Testtid: </td><td><input id="BTestTid" type="text" name="TidfraStartDag" style="background-color: #008215">d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
+        <tr><td>Gennemsnitlig temperaturforskel mellem box 1 og box 2: </td><td><input id="BGenSnitTempBox1Box2" type="text" name="SnitTempForskel"></td></tr>
+        <tr><td>Effektforbrug (målerstand) ved starttidspunkt: </td><td><input id="BEffektStart" type="text" name="EffektforbrugStart"></td></tr>
+        <tr><td>Effektforbrug (målerstand) ved sluttidspunkt: </td><td><input id="BEffektSlut" type="text" name="EffektforbrugSlut"></td></tr>
+        <tr><td>Effektforbrug i beregningsperioden: </td><td><input id="BEffektBPerioden" type="text" name="EffektforbrugBeregnPeriode"></td></tr>
+        <tr><td>Testemnets transmissionskoefficient: </td><td><input id="BTransKoeff" type="text" name="transmissionsKoeff"></td></tr>
 
     </table>
 </div>
 
+<div class="input-group">
+    @Html.EditorFor(model => model.SelectedProject.project.StartTime, new { htmlAttributes = new { @class = "form-control datetimepicker" } })
+    <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+</div>
 
-<script>
-        function OnArealChange(input) {
-            document.getElementById("BStartTid").value = input.value;
-        }
-        function OnProjectChange(input) {
-            if (input.value != "Select") {
-                document.getElementById("Opretbtn").disabled = true;
-                document.getElementById("ProNavn").value = input.value;
+@section scripts
+{
+    <script type="text/javascript">
 
-                @foreach (var item in Model)
-                {
-                    if (item.Id == 0) {
-                       
-                    }
-                } 
-
-                document.getElementById("BStartTid").value = input.value;
-                document.getElementById("BSlutTid").value = input.value;
-
-            } else {
-                document.getElementById("Opretbtn").disabled = false;
-                document.getElementById("ProNavn").value = "";
-            }
-        }
-
-</script>
+       $(document).ready(function () {
+            console.log('ost');
+            $('.datetimepicker').datetimepicker();
+        });
+    </script>
+}

@@ -60,6 +60,66 @@ namespace BLL
             xd.Save(filepath);
         }
 
+        public void CreateProjectXML(StoredProject newProject)
+        {
+            string filepath = HostingEnvironment.ApplicationPhysicalPath + "/"+ newProject.ProjectName +".xml";
+
+            XmlTextWriter xtw;
+            xtw = new XmlTextWriter(filepath, Encoding.UTF8);
+            xtw.WriteStartDocument();
+            xtw.WriteStartElement("CustomerDetails");
+            xtw.WriteEndElement();
+            xtw.Close();
+
+            XmlDocument xd = new XmlDocument();
+            FileStream lfile = new FileStream(filepath, FileMode.Open);
+            xd.Load(lfile);
+
+            XmlElement project = xd.CreateElement("Project");
+            project.SetAttribute("Name", newProject.ProjectName);
+
+
+            IEnumerable<BoxModule> boxModuleList = facade.GetBoxModuleManager().GetAll(newProject);
+            foreach (var item in boxModuleList)
+            {
+
+                XmlElement mod = xd.CreateElement("BoxModule");
+                mod.SetAttribute("BoxModule", item.theLabel);
+                project.AppendChild(mod);
+
+                XmlElement na = xd.CreateElement("DataValue");
+                XmlText natext = xd.CreateTextNode(item.DataValue.ToString());
+                na.AppendChild(natext);
+                mod.AppendChild(na);
+
+                na = xd.CreateElement("DataUnit");
+                natext = xd.CreateTextNode(item.theUnit.ToString());
+                na.AppendChild(natext);
+                mod.AppendChild(na);
+
+                xd.DocumentElement.AppendChild(project);
+                /*
+                XmlElement na = xd.CreateElement("DataValue");
+                XmlText natext = xd.CreateTextNode(item.DataValue.ToString());
+                na.AppendChild(natext);
+                project.AppendChild(na);
+                xd.DocumentElement.AppendChild(project);
+
+                na = xd.CreateElement("DataUnit");
+                natext = xd.CreateTextNode(item.theUnit.ToString());
+                na.AppendChild(natext);
+                project.AppendChild(na);
+                xd.DocumentElement.AppendChild(project);
+                */
+                lfile.Close();
+
+                xd.Save(filepath);
+            }
+
+
+            
+        }
+
 
     }
 }

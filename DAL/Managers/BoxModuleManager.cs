@@ -13,8 +13,7 @@ namespace DAL
 
         public IEnumerable<BoxModule> GetAll(StoredProject project)
         { 
-            return context.BoxModule.SqlQuery("SELECT Point, theLabel, "+ 
-                "OutstationHostname, DataTime, DataValue, theUnit FROM tblStrategy JOIN tblOutstation ON tblStrategy.OutstationNo = tblOutstation.OutstationId JOIN tblPointValue ON tblStrategy.theIndex = tblPointValue.theIndex WHERE DataTime > {0} AND DataTime < {1}",project.StartTime,project.EndTime);
+            return context.BoxModule.SqlQuery("SELECT Point, theLabel, OutstationHostname, DataTime, DataValue, theUnit FROM tblStrategy JOIN tblOutstation ON tblStrategy.OutstationNo = tblOutstation.OutstationId JOIN tblPointValue ON tblStrategy.theIndex = tblPointValue.theIndex WHERE DataTime > '{0}' AND DataTime < '{1}'",project.StartTime,project.EndTime);
         }
     }
 }

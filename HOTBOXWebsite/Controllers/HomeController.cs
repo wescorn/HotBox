@@ -13,7 +13,7 @@ namespace HOTBOXWebsite.Controllers
     {
         Facade facade = new Facade();
         List<DropdownModel> ddlistItems = new List<DropdownModel>();
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             List<StoredProject> projectList = facade.GetStoredProjectService().GetAll();
             
@@ -26,7 +26,10 @@ namespace HOTBOXWebsite.Controllers
                 ddlistItems.Add(ddm);
                 idCounter++;
             }
-            return View(ddlistItems);
+            var selectedProject = ddlistItems.FirstOrDefault(x => x.Id == id);
+            var model = new ProjectOverviewViewModel() { projects = ddlistItems, SelectedProject = selectedProject };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -38,7 +41,7 @@ namespace HOTBOXWebsite.Controllers
             newProject.EndTime = DateTime.Parse(collection["slutDag"] + " " + collection["slutTime"] + ":" + collection["slutMinut"] + ":" + collection["slutSekund"]);
 
 
-            facade.GetStoredProjectService().CreateProject(newProject);
+            facade.GetStoredProjectService().CreateProjectXML(newProject);
             return RedirectToAction("Index");
         }
 
