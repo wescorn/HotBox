@@ -12,9 +12,10 @@ namespace HOTBOXWebsite.Controllers
     public class HomeController : Controller
     {
         Facade facade = new Facade();
-        List<DropdownModel> ddlistItems = new List<DropdownModel>();
+        
         public ActionResult Index(int? id)
         {
+            List<DropdownModel> ddlistItems = new List<DropdownModel>();
             List<StoredProject> projectList = facade.GetStoredProjectService().GetAll();
             
             int idCounter = 0;

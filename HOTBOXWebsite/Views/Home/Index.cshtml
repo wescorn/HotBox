@@ -5,6 +5,7 @@
 }
 
 
+
 <h2>Main</h2>
 
 
@@ -33,9 +34,16 @@
             {
             <tr><td width="40%"><B>Set-Værdier</B></td></tr>
             <tr><td>Projektnavn: </td><td><input id="ProNavn" type="text" name="projektnavn"></td></tr>
-                <tr><td>Starttidspunkt: </td><td><input id="StartSP" placeholder="DD-MM-YYYY" type="text" name="startDag">dage</td> <td><input type="text" name="startTime" placeholder="HH">t</td> <td><input type="text" name="startMinut" placeholder="MM">m</td> <td><input type="text" name="startSekund" placeholder="SS">s</td></tr>
-                <tr><td>Sluttidspunkt: </td><td><input id="SlutSP" placeholder="DD-MM-YYYY" type="text" name="slutDag">dage</td> <td><input type="text" name="slutTime" placeholder="HH">t</td> <td><input type="text" name="slutMinut" placeholder="MM">m</td> <td><input type="text" name="slutSekund" placeholder="SS">s</td></tr>
-                <tr><td colspan="5" align="right"> <input id="Opretbtn" type="submit" value="Opret projekt"> </td></tr>
+
+
+                <tr><td>Starttidspunkt: </td><td><div class="input-group">@Html.EditorFor(model => model.SelectedProject.project.StartTime, new { htmlAttributes = new { @class = "form-control datetimepicker" } }) <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span> </div></td></tr>
+
+               
+                
+                 <tr><td>Sluttidspunkt: </td><td><div class="input-group">@Html.EditorFor(model => model.SelectedProject.project.EndTime, new { htmlAttributes = new { @class = "form-control datetimepicker" } }) <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span> </div></td></tr>
+              
+                 
+                   <tr><td colspan="5" align="right"> <input id="Opretbtn" type="submit" value="Opret projekt"> </td></tr>
         }
 
     </table>
@@ -45,8 +53,8 @@
 
         <tr><td width="40%"><B>Beregninger</B></td></tr>
         <tr><td>Areal af testemne: </td><td><input id="BAreal" type="text" name="Areal" style="background-color: #008215" onchange="OnArealChange(this);"></td></tr>
-        <tr><td>Beregnings starttidspunkt: </td><td>@Html.EditorFor(model => model.SelectedProject.project.StartTime) d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
-        <tr><td>Beregnings sluttidspunkt: </td><td>@Html.EditorFor(model => model.SelectedProject.project.EndTime)d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
+        <tr><td>Beregnings starttidspunkt: </td><td>@Html.EditorFor(model => model.SelectedProject.project.StartTime)</td> </tr>
+        <tr><td>Beregnings sluttidspunkt: </td><td>@Html.EditorFor(model => model.SelectedProject.project.EndTime)</td> </tr>
         <tr><td>Testtid: </td><td><input id="BTestTid" type="text" name="TidfraStartDag" style="background-color: #008215">d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
         <tr><td>Gennemsnitlig temperaturforskel mellem box 1 og box 2: </td><td><input id="BGenSnitTempBox1Box2" type="text" name="SnitTempForskel"></td></tr>
         <tr><td>Effektforbrug (målerstand) ved starttidspunkt: </td><td><input id="BEffektStart" type="text" name="EffektforbrugStart"></td></tr>
@@ -71,6 +79,9 @@
        $(document).ready(function () {
             console.log('ost');
             $('.datetimepicker').datetimepicker();
-        });
+       });
+
+
+
     </script>
 }
