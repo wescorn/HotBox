@@ -53,14 +53,15 @@
 
         <tr><td width="40%"><B>Beregninger</B></td></tr>
         <tr><td>Areal af testemne: </td><td><input id="BAreal" type="text" name="Areal" style="background-color: #008215" onchange="OnArealChange(this);"></td></tr>
-        <tr><td>Beregnings starttidspunkt: </td><td>@Html.EditorFor(model => model.SelectedProject.project.StartTime)</td> </tr>
-        <tr><td>Beregnings sluttidspunkt: </td><td>@Html.EditorFor(model => model.SelectedProject.project.EndTime)</td> </tr>
-        <tr><td>Testtid: </td><td><input id="BTestTid" type="text" name="TidfraStartDag" style="background-color: #008215">d</td> <td><input type="text" name="TidfraStartTime" style="background-color: #008215">t</td> <td><input type="text" name="TidfraStartMinut" style="background-color: #008215">m</td> <td><input type="text" name="TidfraStartSekund" style="background-color: #008215">s</td></tr>
-        <tr><td>Gennemsnitlig temperaturforskel mellem box 1 og box 2: </td><td><input id="BGenSnitTempBox1Box2" type="text" name="SnitTempForskel"></td></tr>
-        <tr><td>Effektforbrug (målerstand) ved starttidspunkt: </td><td><input id="BEffektStart" type="text" name="EffektforbrugStart"></td></tr>
-        <tr><td>Effektforbrug (målerstand) ved sluttidspunkt: </td><td><input id="BEffektSlut" type="text" name="EffektforbrugSlut"></td></tr>
-        <tr><td>Effektforbrug i beregningsperioden: </td><td><input id="BEffektBPerioden" type="text" name="EffektforbrugBeregnPeriode"></td></tr>
-        <tr><td>Testemnets transmissionskoefficient: </td><td><input id="BTransKoeff" type="text" name="transmissionsKoeff"></td></tr>
+        <tr><td>Beregnings starttidspunkt: </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.StartTime) </td> </tr>
+        <tr><td>Beregnings sluttidspunkt: </td><td>@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.EndTime) </td> </tr>
+        <tr><td>Testtid: </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.TestTimeHours) </td></tr>
+        <tr><td>Testtid: </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.TestTimeSeconds) </td></tr>
+        <tr><td>Gennemsnitlig temperaturforskel mellem box 1 og box 2: </td><td>@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.AverageTemp) </td></tr>
+        <tr><td>Effektforbrug (målerstand) ved starttidspunkt: </td><td>@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.PowerConsumptionStart) </td></tr>
+        <tr><td>Effektforbrug (målerstand) ved sluttidspunkt: </td><td>@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.PowerConsumptionEnd) </td></tr>
+        <tr><td>Effektforbrug i beregningsperioden: </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.PowerConsumptionDifference) </td></tr>
+        <tr><td>Testemnets transmissionskoefficient: </td><td></td></tr>
 
     </table>
 </div>

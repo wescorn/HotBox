@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainModels\BoxModule.cs" />
+    <Compile Include="DomainModels\Calculations.cs" />
+    <Compile Include="DomainModels\PowerConsumption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DomainModels\StoredProject.cs" />
   </ItemGroup>

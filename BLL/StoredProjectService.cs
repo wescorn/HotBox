@@ -30,6 +30,7 @@ namespace BLL
                 project.StartTime = DateTime.Parse(xmlStartTime.InnerText);
                 project.EndTime = DateTime.Parse(xmlEndTime.InnerText);
                 project.BoxModules = facade.GetBoxModuleManager().GetAll(project);
+                project.CalculateProjectCalculations();
                 projectList.Add(project);
             }
             return projectList;
