@@ -12,7 +12,7 @@ namespace Domain.DomainModels
         {
             this.Box1Start = m_Box1Start;
             this.Box1End = m_Box1End;
-            this.Box1Difference = Box1End - Box1Start;
+            this.Box1Difference = Box1Start - Box1End;
         }
 
         public double Box1Start { get; set; }

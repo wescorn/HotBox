@@ -19,7 +19,7 @@ namespace Domain.DomainModels
         public string Forb_El_ialt_EL02 = "P200";
 
 
-        public PowerConsumption pc;
+        public PowerConsumption pc = new PowerConsumption(0,0);
 
         //Average Temp Difference between box 1 and 2
         public double atd = 0;
@@ -58,12 +58,12 @@ namespace Domain.DomainModels
 
             foreach (var module in BoxModules)
             {
-                if (module.Point == RT02_BOX1_Top || module.Point == RT01_BOX1_Bund)
+                if (module.Point.Equals(RT02_BOX1_Top) || module.Point.Equals(RT01_BOX1_Bund)) 
                 {
                     box1Average += module.DataValue;
                     box1Entries += 1;
                 }
-                if (module.Point == RT02_BOX2_Top || module.Point == RT02_BOX2_Bund)
+                if (module.Point.Equals(RT02_BOX2_Top) || module.Point.Equals(RT02_BOX2_Bund))
                 {
                     box2Average += module.DataValue;
                     box2Entries += 1;
@@ -73,6 +73,7 @@ namespace Domain.DomainModels
             box1Average = box1Average / box1Entries;
             box2Average = box2Average / box2Entries;
             averageDifference = box2Average - box1Average;
+            
             atd = averageDifference;
             return atd;
         }
@@ -97,26 +98,30 @@ namespace Domain.DomainModels
 
         public PowerConsumption GetPowerConsumption()
         {
-            double Box1Start = 0;
-            double Box1End = 0;
+            BoxModule startModule = null;
+            BoxModule endModule = null;
 
             foreach (var module in BoxModules)
             {
-                DateTime previousDate = StartTime;
-                if (module.Point == Forb_El_ialt_EL01)
+                if (module.Point.Equals(Forb_El_ialt_EL01))
                 {
-                    if (module.DataTime <= previousDate)
+                    if (startModule == null) { startModule = module; }
+                    if (module.DataTime <= startModule.DataTime && module.DataValue != 0)
                     {
-                        Box1Start = module.DataValue;
-                    }
-                    if (module.DataTime >= previousDate)
+                        startModule = module;
+                    } else if (startModule.DataValue == 0) { startModule = module; }
+                    if (endModule == null) { endModule = module; }
+                    if (module.DataTime >= endModule.DataTime)
                     {
-                        Box1End = module.DataValue;
+                        endModule = module;
                     }
-                    previousDate = module.DataTime;
+                    else if (endModule.DataValue == 0) { endModule = module; }
                 }
             }
-            pc = new PowerConsumption(Box1Start, Box1End);
+            if (startModule != null && endModule != null)
+            {
+                pc = new PowerConsumption(startModule.DataValue, endModule.DataValue);
+            }
             return (pc);
         }
 
@@ -127,9 +132,10 @@ namespace Domain.DomainModels
             ProjectCalculations.TestTimeHours = (EndTime - StartTime).TotalHours;
             ProjectCalculations.TestTimeSeconds = (EndTime - StartTime).TotalSeconds;
             ProjectCalculations.AverageTemp = GetAverageTempDifference();
-            ProjectCalculations.PowerConsumptionStart = GetPowerConsumption().Box1Start;
-            ProjectCalculations.PowerConsumptionEnd = GetPowerConsumption().Box1End;
-            ProjectCalculations.PowerConsumptionDifference = GetPowerConsumption().Box1Difference;
+            GetPowerConsumption();
+            ProjectCalculations.PowerConsumptionStart = pc.Box1Start;
+            ProjectCalculations.PowerConsumptionEnd = pc.Box1End;
+            ProjectCalculations.PowerConsumptionDifference = pc.Box1Difference;
         }
 
 

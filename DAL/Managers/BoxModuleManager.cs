@@ -12,20 +12,26 @@ namespace DAL
     {
 
 
-        public IEnumerable<BoxModule> GetAll(StoredProject project)
+        public List<BoxModule> GetAll(StoredProject project)
         {
-                using (var ctx = new DBContext())
-                {
-                string sql = "SELECT Point, theLabel, OutstationHostname, DataTime, DataValue, theUnit FROM tblStrategy JOIN tblOutstation ON tblStrategy.OutstationNo = tblOutstation.OutstationId JOIN tblPointValue ON tblStrategy.theIndex = tblPointValue.theIndex WHERE DataTime > @StartTime AND DataTime < @EndTime";
+            List<string> pointList = new List<string>(new string[] { "P10", "P17", "P20", "P21", "P100", "P200" });
+            List<BoxModule> modules = new List<BoxModule>();
+            foreach (var point in pointList)
+            {
+                modules.AddRange(EFSafePointQuery(point, project.StartTime, project.EndTime));
+            }
+            return modules;
+        }
 
-                List<SqlParameter> sqlParams = new List<SqlParameter>();
-                sqlParams.Add(new SqlParameter("@StartTime", project.StartTime));
-                sqlParams.Add(new SqlParameter("@EndTime", project.EndTime));
-
-                var BoxModules = ctx.BoxModule.SqlQuery(sql, sqlParams.ToArray()).ToList();
-                return BoxModules;
-                
+        private List<BoxModule> EFSafePointQuery(string point, DateTime startTime, DateTime endTime)
+        {
+            using (var ctx = new DBContext())
+            {
+            string sql = "SELECT DISTINCT Point, theLabel, DataTime, DataValue, theUnit FROM tblStrategy JOIN tblPointValue ON tblStrategy.theIndex = tblPointValue.theIndex WHERE (DataTime > TRY_PARSE('" + startTime.ToString() + "' AS DATETIME USING 'en-gb') AND DataTime < TRY_PARSE('" + endTime.ToString() + "' AS DATETIME USING 'en-gb')) AND (Point like '"+point+"')";
+            return ctx.BoxModule.SqlQuery(sql).ToList();
             }
         }
+
+
     }
 }   

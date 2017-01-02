@@ -11,23 +11,7 @@
 
 
 <div style="border: 2px solid black">
-   @using (Html.BeginForm("Index", "Home", FormMethod.Get)) {
-        <select name="id" onchange="this.form.submit()">
-        <option value="Select">Select</option>
-        @foreach (var item in Model.projects)
-        {
-            if (Model.SelectedProject != null && Model.SelectedProject.Id == item.Id)
-            {
-                <option value="@item.Id" selected="selected">@item.project.ProjectName</option>
-            }
-            else
-            {
-                <option value="@item.Id">@item.project.ProjectName</option>
-            }
 
-        }
-    </select>
-   }
 
     <table style="width:100%">
         @using (Html.BeginForm("CreateProject", "Home", FormMethod.Post))
@@ -36,11 +20,11 @@
             <tr><td>Projektnavn: </td><td><input id="ProNavn" type="text" name="projektnavn"></td></tr>
 
 
-                <tr><td>Starttidspunkt: </td><td><div class="input-group">@Html.EditorFor(model => model.SelectedProject.project.StartTime, new { htmlAttributes = new { @class = "form-control datetimepicker" } }) <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span> </div></td></tr>
+                <tr><td>Starttidspunkt: </td><td><div class="input-group">@Html.EditorFor(model => model.SelectedProject.project.StartTime, new { htmlAttributes = new { @class = "form-control datetimepicker", @id = "startTime", @name = "startTime" } }) <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span> </div></td></tr>
 
                
                 
-                 <tr><td>Sluttidspunkt: </td><td><div class="input-group">@Html.EditorFor(model => model.SelectedProject.project.EndTime, new { htmlAttributes = new { @class = "form-control datetimepicker" } }) <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span> </div></td></tr>
+                 <tr><td>Sluttidspunkt: </td><td><div class="input-group">@Html.EditorFor(model => model.SelectedProject.project.EndTime, new { htmlAttributes = new { @class = "form-control datetimepicker", @id = "endTime", @name = "endTime" } }) <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span> </div></td></tr>
               
                  
                    <tr><td colspan="5" align="right"> <input id="Opretbtn" type="submit" value="Opret projekt"> </td></tr>
@@ -50,18 +34,37 @@
 </div>
 <div style="border: 2px solid black">
     <table style="width:100%">
+        <tr><td>
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {
+            <select name="id" onchange="this.form.submit()">
+                <option value="Select">Select</option>
+                @foreach (var item in Model.projects)
+                {
+                    if (Model.SelectedProject != null && Model.SelectedProject.Id == item.Id)
+                    {
+                        <option value="@item.Id" selected="selected">@item.project.ProjectName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.project.ProjectName</option>
+                    }
 
-        <tr><td width="40%"><B>Beregninger</B></td></tr>
-        <tr><td>Areal af testemne: </td><td><input id="BAreal" type="text" name="Areal" style="background-color: #008215" onchange="OnArealChange(this);"></td></tr>
+                }
+            </select>
+        }
+            </td></tr>
+        <tr><td width="40%"><B>Beregninger</B></td> <td> <input type="button" value="↻" onclick="RefreshPage()"> </td> </tr>
+        <tr><td>Areal af testemne: </td><td><input id="BAreal" type="text" name="Areal" style="background-color: #008215" onchange="CalculateTransmission();">
         <tr><td>Beregnings starttidspunkt: </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.StartTime) </td> </tr>
         <tr><td>Beregnings sluttidspunkt: </td><td>@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.EndTime) </td> </tr>
-        <tr><td>Testtid: </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.TestTimeHours) </td></tr>
-        <tr><td>Testtid: </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.TestTimeSeconds) </td></tr>
-        <tr><td>Gennemsnitlig temperaturforskel mellem box 1 og box 2: </td><td>@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.AverageTemp) </td></tr>
-        <tr><td>Effektforbrug (målerstand) ved starttidspunkt: </td><td>@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.PowerConsumptionStart) </td></tr>
-        <tr><td>Effektforbrug (målerstand) ved sluttidspunkt: </td><td>@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.PowerConsumptionEnd) </td></tr>
-        <tr><td>Effektforbrug i beregningsperioden: </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.PowerConsumptionDifference) </td></tr>
-        <tr><td>Testemnets transmissionskoefficient: </td><td></td></tr>
+        <tr><td>Testtid(Timer): </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.TestTimeHours) </td></tr>
+        <tr><td>Testtid(Sekunder): </td><td> <p id="CTestTidS"> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.TestTimeSeconds)<p></td></tr>
+        <tr><td>Gennemsnitlig temperaturforskel mellem box 1 og box 2: </td><td> <p id="CMiddelTemp"> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.AverageTemp)</p> </td></tr>
+        <tr><td>Effektforbrug (målerstand) ved starttidspunkt: </td><td><p id="CEffStart">@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.PowerConsumptionStart) </p> </td></tr>
+        <tr><td>Effektforbrug (målerstand) ved sluttidspunkt: </td><td><p id="CEffSlut">@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.PowerConsumptionEnd) </p> </td></tr>
+        <tr><td>Effektforbrug i beregningsperioden: </td><td> <p id="CEffRest"> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.PowerConsumptionDifference) </p> </td></tr>
+        <tr><td>Testemnets transmissionskoefficient: </td><td> <p id="Transmission"></p></td></tr>
 
     </table>
 </div>
@@ -79,10 +82,27 @@
 
        $(document).ready(function () {
             console.log('ost');
-            $('.datetimepicker').datetimepicker();
+            $('.datetimepicker').datetimepicker({
+                
+            });
        });
 
+       function RefreshPage() {
+           window.location.reload();
+       }
 
+       function CalculateTransmission(areal) {
+
+           var Areal = parseFloat(document.getElementById("BAreal").innerHTML);
+
+           var EffRest = parseFloat(document.getElementById("CEffRest").innerHTML);
+           var TestTidS = parseFloat(document.getElementById("CTestTidS").innerHTML);
+           var MiddelTemp = parseFloat(document.getElementById("CMiddelTemp").innerHTML);
+
+           document.getElementById("Transmission").innerHTML = ((EffRest) / (TestTidS * MiddelTemp * Areal));
+
+           throw new Exception(EffRest);
+       }
 
     </script>
 }

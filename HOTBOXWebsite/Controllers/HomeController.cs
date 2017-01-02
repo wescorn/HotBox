@@ -38,13 +38,15 @@ namespace HOTBOXWebsite.Controllers
         {
             StoredProject newProject = new StoredProject();
             newProject.ProjectName = collection["projektnavn"];
-            newProject.StartTime = DateTime.Parse(collection["startDag"] + " " + collection["startTime"] + ":" + collection["startMinut"] + ":" + collection["startSekund"]);
-            newProject.EndTime = DateTime.Parse(collection["slutDag"] + " " + collection["slutTime"] + ":" + collection["slutMinut"] + ":" + collection["slutSekund"]);
+            newProject.StartTime = DateTime.Parse(collection["startTime"]);
+            newProject.EndTime = DateTime.Parse(collection["endTime"]);
 
 
             facade.GetStoredProjectService().CreateProjectXML(newProject);
             return RedirectToAction("Index");
         }
+
+
 
 
         public ActionResult About()
