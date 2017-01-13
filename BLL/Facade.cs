@@ -9,7 +9,7 @@ namespace HOTBOXWebsite.BLL
     public class Facade
     {
         public static StoredProjectService StoredProjectService;
-        public static BoxModuleService BoxModuleService;
+        //public static BoxModuleService BoxModuleService;
 
         public StoredProjectService GetStoredProjectService()
         {
@@ -20,13 +20,13 @@ namespace HOTBOXWebsite.BLL
             return StoredProjectService;
         }
 
-        public BoxModuleService GetBoxModuleService()
-        {
-            if (BoxModuleService == null)
-            {
-                BoxModuleService = new BoxModuleService();
-            }
-            return BoxModuleService;
-        }
+        //public BoxModuleService GetBoxModuleService()
+        //{
+        //    if (BoxModuleService == null)
+        //    {
+        //        BoxModuleService = new BoxModuleService();
+        //    }
+        //    return BoxModuleService;
+        //}
     }
 }

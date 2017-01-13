@@ -27,9 +27,16 @@ namespace DAL
         {
             using (var ctx = new DBContext())
             {
-            string sql = "SELECT DISTINCT Point, theLabel, DataTime, DataValue, theUnit FROM tblStrategy JOIN tblPointValue ON tblStrategy.theIndex = tblPointValue.theIndex WHERE (DataTime > TRY_PARSE('" + startTime.ToString() + "' AS DATETIME USING 'en-gb') AND DataTime < TRY_PARSE('" + endTime.ToString() + "' AS DATETIME USING 'en-gb')) AND (Point like '"+point+"')";
-            return ctx.BoxModule.SqlQuery(sql).ToList();
-            }
+                if (ctx.Database.Exists())
+                {
+                    string sql = "SELECT DISTINCT Point, theLabel, DataTime, DataValue, theUnit FROM tblStrategy JOIN tblPointValue ON tblStrategy.theIndex = tblPointValue.theIndex WHERE (DataTime > TRY_PARSE('" + startTime.ToString() + "' AS DATETIME USING 'en-gb') AND DataTime < TRY_PARSE('" + endTime.ToString() + "' AS DATETIME USING 'en-gb')) AND (Point like '" + point + "')";
+                    return ctx.BoxModule.SqlQuery(sql).ToList();
+                }
+                else {
+                    List<BoxModule> emptyList = new List<BoxModule>();
+                    return emptyList;
+                }
+                }
         }
 
 

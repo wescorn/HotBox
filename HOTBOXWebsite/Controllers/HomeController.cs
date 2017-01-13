@@ -42,7 +42,7 @@ namespace HOTBOXWebsite.Controllers
             newProject.EndTime = DateTime.Parse(collection["endTime"]);
 
 
-            facade.GetStoredProjectService().CreateProjectXML(newProject);
+            facade.GetStoredProjectService().CreateProject(newProject);
             return RedirectToAction("Index");
         }
 

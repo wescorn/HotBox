@@ -23,9 +23,5 @@ namespace DAL.Managers
             return xdoc;
         }
 
-        public void CreateProject() {
-
-        }
-
     }
 }

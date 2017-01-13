@@ -20,11 +20,11 @@
             <tr><td>Projektnavn: </td><td><input id="ProNavn" type="text" name="projektnavn"></td></tr>
 
 
-                <tr><td>Starttidspunkt: </td><td><div class="input-group">@Html.EditorFor(model => model.SelectedProject.project.StartTime, new { htmlAttributes = new { @class = "form-control datetimepicker", @id = "startTime", @name = "startTime" } }) <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span> </div></td></tr>
+                <tr><td>Starttidspunkt: </td><td><div class="input-group"> <input class="form-control datetimepicker" name="startTime" id="startTime"> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span> </div></td></tr>
 
                
                 
-                 <tr><td>Sluttidspunkt: </td><td><div class="input-group">@Html.EditorFor(model => model.SelectedProject.project.EndTime, new { htmlAttributes = new { @class = "form-control datetimepicker", @id = "endTime", @name = "endTime" } }) <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span> </div></td></tr>
+                 <tr><td>Sluttidspunkt: </td><td><div class="input-group">  <input class="form-control datetimepicker" name="endTime" id="endTime"> <span class="input-group-addon"> <span class="glyphicon glyphicon-calendar"></span></span> </div></td></tr>
               
                  
                    <tr><td colspan="5" align="right"> <input id="Opretbtn" type="submit" value="Opret projekt"> </td></tr>
@@ -55,7 +55,7 @@
         }
             </td></tr>
         <tr><td width="40%"><B>Beregninger</B></td> <td> <input type="button" value="↻" onclick="RefreshPage()"> </td> </tr>
-        <tr><td>Areal af testemne: </td><td><input id="BAreal" type="text" name="Areal" style="background-color: #008215" onchange="CalculateTransmission();">
+        <tr><td>Areal af testemne: </td><td> <input type="text" id="BAreal" name="Areal" style="background-color: #008215" onchange="CalculateTransmission();">
         <tr><td>Beregnings starttidspunkt: </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.StartTime) </td> </tr>
         <tr><td>Beregnings sluttidspunkt: </td><td>@Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.EndTime) </td> </tr>
         <tr><td>Testtid(Timer): </td><td> @Html.DisplayFor(model => @Model.SelectedProject.project.ProjectCalculations.TestTimeHours) </td></tr>
@@ -69,21 +69,17 @@
     </table>
 </div>
 
-<div class="input-group">
-    @Html.EditorFor(model => model.SelectedProject.project.StartTime, new { htmlAttributes = new { @class = "form-control datetimepicker" } })
-    <span class="input-group-addon">
-        <span class="glyphicon glyphicon-calendar"></span>
-    </span>
-</div>
 
 @section scripts
 {
     <script type="text/javascript">
 
+        //CHANGE FORMAT TO "dd-mm-yyyy hh:mm:ss" !!!!!
+
        $(document).ready(function () {
             console.log('ost');
             $('.datetimepicker').datetimepicker({
-                
+               
             });
        });
 
@@ -91,13 +87,14 @@
            window.location.reload();
        }
 
-       function CalculateTransmission(areal) {
+       function CalculateTransmission() {
 
-           var Areal = parseFloat(document.getElementById("BAreal").innerHTML);
-
+           var Areal = parseFloat(document.getElementById("BAreal").value);
            var EffRest = parseFloat(document.getElementById("CEffRest").innerHTML);
            var TestTidS = parseFloat(document.getElementById("CTestTidS").innerHTML);
            var MiddelTemp = parseFloat(document.getElementById("CMiddelTemp").innerHTML);
+
+           window.alert(EffRest + " - " + TestTidS + " - " + MiddelTemp + " - " + Areal);
 
            document.getElementById("Transmission").innerHTML = ((EffRest) / (TestTidS * MiddelTemp * Areal));
 
