@@ -13,7 +13,6 @@ namespace Domain.DomainModels
 
         public string theLabel { get; set; }
 
-//        public string OutstationHostname { get; set; }
         [Key]
         public DateTime DataTime { get; set; }
 
